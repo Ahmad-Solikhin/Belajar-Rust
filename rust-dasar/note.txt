@@ -1,0 +1,319 @@
+Variable
+Variable di rust menggunakan kata kunci let
+Sifat dari variable di rust defaultnya adalah immutable (tidak bisa diubah lagi datanya setelah diinisiasi)
+Jika ingin membuat variable yang bisa diubah lagi datanya bisa menggunakana keyword "mut"
+
+============================================================================================================
+Data Types
+Tipe data di rust dibagi jadi 2:
+1. scalar : nilai tunggal (single value)
+2. compound : nilai bisa lebih dari 1 value (tuple, array)
+
+Scalar
+- Integer : bilangan bulat
+- Float : bilangan desimal
+- Boolean : true or false
+- Char : karakter
+
+Compound
+- Tuple : kumpulan data yang tipe datanya bisa berbeda
+- Array : kumpulan data dengan tipe data yang sama
+
+Tipe data bisa disebutkan secara explicit dengan menggunakan : {tipe_data} setelah nama variable
+
+Konversi tipe data number dari ukuran kecil ke lebih besar atau sebaliknya, tapi kalo lebih besar ke lebih kecil harus diperhatikan besarnya, jika tidak bisa ditampung bisa terjadi overflow dan nilainya jadi 0
+
+Char harus menggunakan petik satu dan hanya bisa 1 karakter
+
+Tuple
+Jumlah data di dalam tuple itu udah final tidak bisa dikurangi atau ditambah lagi
+Untuk bikin tuple bisa pake () tanda kurung
+Untuk akses data di tuple menggunakan indexnya bisa menggunakna . (titik)
+Tuple bisa dilakukan destructuring sama kayak di js, jika ada data yang tidak ingin digunakan bisa menggunakan _ (garis bawah)
+Jika membuat variable tuple dalam bentuk mutable maka isinya dapat dirubah lagi, caranya pakai nomor indexnya dan diassign saja pake =
+
+Unit
+Ini adalah tuple kosong, maksudnya gada isinya sama sekali, unit ini biasanya digunakan dalam function yang tidak mengembalikan data
+
+Array
+Merupakan kumpulan 1 tipe data, misal kalau integer ya integer semua dan sebagainya
+Untuk membuat array menggunakan [] (kurung siku)
+Array di rust ukurannya fix dan tidak bisa dirubah, dikurang maupun ditambah
+Cara akses array juga pake index tapi ini pake kurung siku kek di bahasa lainnya
+Ini sama kayak variable lainnya, kalo datanya mau diubah harus dibuat mutable
+Di array bisa dihitung panjangnya berapa, bisa menggunakan function bawaan len()
+
+Constant
+Ini adalah vbariable immutable yang tidak bisa diubah sama sekali, perbedaannya dengan let adalah constant tidak memiliki opsi mutable
+Untuk mengunakna constant harus langsung dideklarasikan, dan tipe datanya harus disebutkan secara eksplist
+Best practice nya constant ini penamaannya menggunakan huruf kapital dan tanda hubung _ jika lebih dari 1 kata
+
+Stack
+Ini menyimpan data yang fix ukurannya, contoh number array dan tuple
+
+Heap
+Ini digunakan untuk menyimpan data yang ukurannya tidak fix, contohnya string
+
+String
+DI rust ada 2 macam string
+- &str : (string slice) ukuran datanya fix dan akan disimpan di satck
+- String : ukuran datanya bisa mengembang dan disimpan di heap
+
+&str
+Jika membuat variable mutable yang menggunakan &str jika diubah valunya maka yang berubah ada isinya buakn di update isi dari string sebelumnya
+&str memiliki beberapa method untuk memanipulasi datanya namun akan selalu membuat data baru
+Ada beberapa method juga yang mengembalikan String bukan &str
+
+============================================================================================================
+If Expression
+Sama seperti dengan bahasa pemrograman lain, if digunakan untuk melakukan percabangan, cara membuat if nya mirip sepoerti golang
+
+If di rust bisa mengembalikan nilai, karena if dalam rust itu termasuk expression
+
+============================================================================================================
+Loop
+
+Perulangan dalam rust bisa menggunakan loop, tetep ada konsep break dan continue juga
+Loop juga bisa mengembalikan nilai kayak di if
+
+Loop Label
+Jika membuat loop dalam loop dan ingin menghentikan loop yang berada diatasnya bisa menggunakan labelnya
+Untuk memberi label pada loop bisa menggunakan contoh : 'outer: loop
+
+While Loop
+Perulangan yang menggunakan kondisi sebagai penentu apakah loop lanjut atau tidak, ini juga bisa make break dan continue
+
+For Loop
+Loop ini bisa digunakan untuk mengambil semua data satu2 dari arraynya
+
+Range
+Di rust ada tipe data range yang isinya adalah jarak antara start dan end
+Range ini tipenya juga collection sama seperti array
+Cara membuat range bisa menggunakan (start..end) contohnya 0..5 artinya start dari 0 dan diakhiri di 4
+
+Range Inclusive
+Jika range sebelumnya end nya tidak benar2 end mealinkan (n-1), jika ingin tetap mengikuti akhrannya bisa menggunakan yang namanya range inclusive
+Cara penggunaannya (start..=end) contoh 0..=4, ini bakal ngambil sampe 4
+
+============================================================================================================
+Function
+Dibuat dengan fn, dan best practice untuk memberi nama function adalah menggunkana snake case contoh: fn test_hitung()
+Function juga bisa ditambahkan parameter, parameter ini bisa atau lebih atau bahkan tanpa parameter sama sekali
+Di parameter juga perlu ditambahkan tipe data
+
+Return Value
+Dalam membuat function kadang ingin mengembalikan nilai dari function tersebut, ini disebut return value
+Untuk mendeklarasikan return value bisa mengunakan -> diikuti dengan tipe datanya
+Buat return lebih awal ini sama aja kayak bahasa pemrograman lainnya
+
+Recursive
+Ini adalah function yang memanggil dirinya sendiri
+
+Ownership
+Di function juga terdapat aturan ownership pada variable
+Tipe data heap yang dikirim sebagai parameter di function maka ownershipnya akan dipindah ke parameter function nya
+Jika tipe datanya stack maka datanya akan di copy
+Jadi untuk data heap yang dikirim sebagai parameter setelah functionnya selesai dieksekusi maka value dan ownershipnya akan dihapus
+
+Return Value Ownership
+Jika return valuenya adalah heap maka ownership akan dipindahkan ke yang memanggil functionya
+Jika return valuenya adalah stack maka akan dicopy valuenya
+
+Mengembalikan Ownership
+Ownership bisa dikembalikan dengan menggunakan return value berupa tuple
+Jadi konsepnya nanti parameternya dimasukkan juga ke return valuenya
+Mengembalikan owenership dalam return value juga akan menyulitkan nantinya, karena semakin banyak parameter yang dikirim berarti semakin banyak juga return value yang harus diberikan
+Solusi dari hal ini di rust menyediakan konsep dimana mengirim data heap tampa harus transfer ownership, hal ini disebut dengan reference
+
+============================================================================================================
+References dan Borrowing
+
+References
+Reference ini adalah pointer (penunjuk) ke data di heap, owner datanya masih pemilik awalnya
+Reference akan dijamin menunjuk ke value yang valid selama data ownernya masih ada
+Untuk membuat referebce di rust bisa menggunkana tanda & sebelum tipe datanya
+Reference bisa dibuat sebanyak mungkin tidak seperti ownership yang hanya boleh ada 1 dalam siklus yang ada
+
+Borrowing
+Saat membuat reference, kegiatan ini disebut dengan borrowing
+Bisa dianalogikan kita bisa meminjam barang, dan kalau sudah selesai wajib mengembalikan ke ownernya
+Tidak bisa juga memodifikasi value dari reference karena ini defaultnya bersifat immutable walaupun variable ownernya adalah mutable
+
+Mutable Reference
+Reference defaultnya memang immutable, namun ini bisa diubah menjadi mutable dengan cara menggunakan &mut
+Ada ketentuan jika ingin membuat mutable reference, yaitu variable owner juga harus mutable
+Selain itu, untuk menjamin keamanannya dalam satu waktu hanya boleh ada satu mutable refernce dan tidak ada reference lainnya (baik yang mutable maupun yang immutable)
+
+Dangling Pointer
+Ini adalah kondisi dimana pointer yang menunjuk ke value yang tidak ada di memory (heap)
+Di rust hal ini tidak diperbolehkan, contohnya ketika mengembalikan reference, karena value akan otomatis dihapus keteku sudah keluar dari scope functionnya
+Hal ini bisanya terjadi di golang yang sering membuat function dengan return value pointer, namun di rust tidak bisa
+Solusinya adalah dengan value langsung bukan referencenya, dan nanti akan ownershipnya akan berpindah
+Atau bisa juga keluarkan variable ownernya ke variable diluar function, agar variable tersebut masuk kedalam scope utama dan tidak akan dihapus setelah function selesai dieksekusi
+
+============================================================================================================
+SLice
+Slice adalah reference ke sebagian element dari data collection (misal array)
+Karena slice reference, jadi dia tidak ada ownernya
+Contoh ada array dengan data 10, mau diambil 5 data pertama, bisa dibuat slice sebagai reference dari data ke-1 sampai ke-5
+
+Range
+Saat mengambil data di collection harus ditentukan range untuk slicenya
+Ada exclusive mulai dari start sampai n-1, dan inclusive start sampai n
+
+============================================================================================================
+String Slice
+&str ini berarti adalah reference ke sebagian atau seluruh data str
+Dengan menggunakan &str berarti bisa mengambil sebagian atau keseluruhan dari String
+Dan karena ini tipe reference maka juga berarti tidak ada ownernya
+
+============================================================================================================
+Struct
+Tipe data mirip tuple yang bisa menampung beberapa tipe data yang berbeda
+Bedanya di struct bisa diberikan nama untuk setiap datanya, dan nantinya bisa diakses menggunakan namanya bnukan menggunakan index saja
+Ini mirip kayak object atau struct di golang
+
+Cara membuat instance dari struct nya wajib menentukan semua value untuk field di struct nya
+
+Struct bisa digunakan sebagai parameter maupun return value dari sebuah function
+
+Init Shorthand, ini konsepnya kayak kasih key dan value di js, jadi langsung kasih nama variablenya, namun ini akan memindahkan ownershipnya
+
+Struct update syntax
+Defaultnya instance struct adalah immutable, jika ingin mengupdatenya bisa diubah menggunakan mut atau mengunkana destructuring kayak di js
+Tapi saat menggunkana struct update syntax harus hati2 dengan value yang berada di heap, karena nanti ownernya akan berpindah ke field instance yang baru
+Untuk menghindari hal ini bisa manual satu2 di clone pada tipe data yang di heap
+
+Tuple Struct
+Ini jatuhnya sama seperti tuple namun tidak menggunakna nama fieldnya, untuk aksesnya sama seperti tuple menggunakan indexnya
+
+Struct tanpa Field
+Dalam membuat struct bisa dibuat tanpa adanya field, untuk sekarang masih belum berguna namun nanti kegunaannya akan terlihat saat menggunakna Trait
+
+Reference Filed Struct
+Tipe data dalam struct bisa berbentuk dalam reference, namun untuk melakukannya harus menggunakan Lifetime, nanti akan di bahas
+
+============================================================================================================
+Method
+Method sebenarnya mirip dengan function, bedanya tidak bisa berdiri sendiri dan harus menempel di struct, enum atau trait
+Pada method parameter pertama biasanya adalah self, ini representasi dari instance dimana method itu dipanggil
+Dan biasanya selfnya akan dibuat dengan reference agar ownershipnya tidak berpindah ke method nya
+
+Associated Functions
+Jika function dengan parameter pertama self maka disebut dengan method
+Namun jika tidak menggunkana self maka methodnya tidak terhubung dengan istance nya dan disebut dengan Associated Functions
+
+============================================================================================================
+Enum
+Merupakan tipe data yang digunakan untuk menyimpan beberapa kemungkinan tipe data Level, sebagai contoh bisa menyimpan Reguler dan Premium
+Dengan menggunakan enum ini tipe data tersebut dibatasi dengan value yang sudah dideklarasikan
+
+Enum Data
+Enum juga bisa digunakna untuk menyimpan data kayak tuple
+Untuk mengakses datanya perlu dilakukan pattern matching pada materi selanjutnya
+
+Enum Method
+Cara nambahinnya sama kayak cara nambahin di struct
+
+============================================================================================================
+Pattern Matching
+Selani menggunakan if dalam melakukan percabangan, di rust bisa digunakan pattern matching
+Hal ini lumayan kompleks
+
+Enum
+Untuk melakukan kondisi dari enum bisa menggunakan pattern matching ini dan harus dibuat untuk semua kondisi yang ada di enum nya
+Ini juga bisa digunakna untuk mengambil data yang terdapat pada enumnya disebut dengan destructuring
+
+Value
+Pattern matching juga bisa digunakan untuk value seperti string atau number
+Untung value ada bagian elsenya yang akan diisi dengan nama variablenya
+
+Multiple Pattern
+Jika ingin menggunakan kondisi seperti or dalam pattern matching bis amenggunakan pipe (|)
+
+Range Pattern
+Ini bisa digunakan jika value yang dilakukan match adalah number, jadi cukup menggunakan tipe data range
+
+Destructuring Struct Patterns
+Selain destructure enum, bisa juga digunakan untuk struct filed
+Nama dari variable harus sesui dengan fieldnya kecuali untuk tuple struct bis menggunakna nama variable lain
+
+Match Expression
+Selain digunakan untuk kondisi, match juga bisa digunakan untuk assign value menggunakna let
+
+============================================================================================================
+Type Alias
+Digunakan untuk membuat tipe data alias dari tipe data yang udah ada sebelumnya
+Sebagai contoh umur biasanya integer bisa dibuat type aliasnya menjadi age
+
+============================================================================================================
+Module
+Ini adalah cara untuk organisir kode2
+Untuk membuat module bisa menggunakan kata kunci mod lalu diikuti nama modulnya
+Secara default visibility dari code block yang ada di dalam module hanya bisa diakses oleh module tersebut saja
+Jika ingin mengakses isi dari modulenya dari tempat lain, bisa mengubah aksesnya dari private menjadi public dengan kata kunci pub baik di type, function maupun method
+Untuk mengaksesnya harus menggunakan nama modulenya terlebih dahulu lalu diikuti oleh ::
+
+Use Keyword
+Kadang sulit juga jika harus menulis tertus menerus modulnya, use bisa digunakan agar kode yang dibuat masuk ke dalam scope module
+Dengan demikian bisa mengakses tanpa menyebutkan modulenya lagi
+Jika terdapat member yang sama dari module yang di use bisa menggunakan kata kunci as agar nama member tidak bentrok
+
+Module FIle Terpisah
+Biasanya module akan dibuat dalam di file terpisah agar kode program tidak terlalu panjang dan mudah digunakan
+Dan otomatis nama filenya agan digunakan sebagai nama modulnya
+Kecuali jika ingin menggunakna sub module bisa deklarasikan namanya secara terpisah
+Secara default kode pada file terpisah tidak akan diinclude dalam programnya
+
+Use Lainnya
+Kadang kode program sudah banyak dan melakukan use terlalu banyak member di satu module, ada cara lain menggunakan use
+Jika ingin mengambil semua member bisa menggunakan tanda bintang (*) : use module::*
+Atau jika ingin mengambil beberapa saja bisa sebutkan dalam tanda kurung kurawal {} : use module::{A, B, C}
+
+============================================================================================================
+Crate
+Kode yang dijalankan oleh rust compiler untuk membuat aplikasi atau library
+Contoh kode sebelumnya adalah aplikasi dan cratenya ada di src/main.rs
+Di dalam crate harus didefinisikan file-file yang digunakan sebagai module
+Jika ingin use module lain diluar file main harus menggunakan prefix crate:: untu mengacu ke main.rs
+Jika dilakukan di main file maka tidak perlu lagi menggunakna crate::
+
+Saat membuat nested module dan ingin mengakses module yang ada diatasnya bisa menggunakna super, bisa juga menyebutkan namanya dari awal menggunakan crate
+
+============================================================================================================
+Trait
+Definisi kontrak untuk tipe data lainnya
+Trait ini mirip konsepnya sama interface di java, jadi kontrak ini harus diimplementasikan
+Trait berisi definisi method tanpa implementasinya, untuk membuatnya bisa menggunakan kata kunci trait dan diikuti dengan namanya
+Untuk naming conventionnya mirip struct pake PascalCase
+Trait ini bisa digunakan sebagai tipe data namun tetep harus ada implementasinya
+Untuk implementasinya bisa menggunakan impl NamaTrait for TipeData
+Trait tidak bisa dibuat instance nya atau object nya, untuk membuat instance dari trait harus menggunakan implementasinya (sama kayak java juga gini)
+Trait sebenarnya juga bisa juga digunakan untuk Method dengan implementasi konkrit atau default implementation dan secara otomatis Type yang nanti melakukan implementasi akan mendapatkan default implementation dari trait tersebut jika tidak dilakukan impelementasi ulang
+
+Trait Parameter
+Trait juga bisa digunakan sebagai parameter, jadi bisa mengirimkan tipe data apapun yang penting tipe data tersebut mengimplementasikan trait tersebut
+Untuk penggunakannya harus ada kata kunci "impl NamaTrait" pada parameternya, dan jika tipe datanya reference bisa tinggal ditambah &
+
+Multiple Trait
+Type bisa implementasi lebih dari satu trait, konsepnya sama kayak interface di java bisa implementasi lebih dari 1 interface
+Parameter di function bisa merupakan kombinasi dari banyak trait
+
+Return Trait
+Selain untuk parameter, trait juga bisa digunakan sebagai return value
+Karen trait tidak bisa dibuat instance nya, return valuenya sudah harus dalam implementasinya
+Untuk membuatnya sebagai return value, perlu disebutkan seperti di parameter yaitu impl NamaTrait
+Sebaiknya return langsung valuenya bukan reference, karena nanti bisa menyebabkan dangling reference
+Kembalian dari function return trait tidak bisa berbeda implementasi atau struct nya, ini nanti bisa ditangani menggunakan generic
+
+Conflict Method Name
+Kadang nama trait itu konflik dengan nama function lainnya, rust tidak akan menjadikan hal ini error dan akan ketahuan saat memanggilnya
+Ada cara untuk menentukan method mana yang akan dipanggil menggunakan Type::nama_method(instance)
+
+Super Trait
+Trait bisa digabungkan dengan konsep pewarisan dimana suatu Trait bisa memiliki beberapa Trait di bawahnya
+Trait yang ada di atasnya disebut sebagai Super Trait
+Misal dibuat Trait A, Trait B, dan Trait C, lalu Trait A menjadi super Trait B dan Trait C
+Sehinggal Trait A menjadi Super Trait nya, Trait juga bisa memiliki lebih dari 1 Super Trait dengan menggunakan +
+
+
