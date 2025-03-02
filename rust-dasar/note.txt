@@ -315,5 +315,110 @@ Trait bisa digabungkan dengan konsep pewarisan dimana suatu Trait bisa memiliki 
 Trait yang ada di atasnya disebut sebagai Super Trait
 Misal dibuat Trait A, Trait B, dan Trait C, lalu Trait A menjadi super Trait B dan Trait C
 Sehinggal Trait A menjadi Super Trait nya, Trait juga bisa memiliki lebih dari 1 Super Trait dengan menggunakan +
+============================================================================================================
+
+Generic
+Merupakan fitur bisa membuat function, struct, enum, method atau trait yang tipe datanya bisa diubah, ini sama aja kayak generic di java
+
+Generic di Struct
+Bisa menambahkan tipe data generic setelah nama struct menggunakan <> dan diisi dengan tipe data generic yang ingin digunakan
+Tipe datanya bisa lebih dari 1 dan tinggal menggunakan koma ",", biasanya generic akan menggunakan 1 huruf kapitgal aja
+
+Generic di Enum
+Ini sama aja cara buatnya kayak yang di Struct
+
+Generic Type Bond
+Saat membuat generic bis diberikan batasan juga jenis tipe data apa saja, ini caranya menggunakan titik dua ":" setelah tipe genericnya dan diikuti dengan Trait nya
+Jika ingin menggunakan multiple Trait bisa menggunakan +
+
+Generic di Function
+Generic bisa digunakan juga di function, bisa diterapkan pada parameter dan return value
+
+Generic di Method
+Saat buat generic di method, generic bisa ditambahkan setelah kata kunci impl agar bisa digunakan semua method
+Atau bisa juga khusus untuk method tertentu dengan cara menambahkan generic seperti saat membuat function
+
+Generic di Trait
+Saat membuat generic di trait, akan memaksa implementasi trait tersebut menggunakan type generic juga
+
+Where Clause
+Ada cara lain untuk menggunakan type bound tanpa titik dua, yaitu menggunakan where clause denganb kata kunci where
+Ini akan lebih mudah dibaca saat memiliki type bound yang banyak
+
+Default Generic Type
+Generic type di rust bis diberikan default nya menggunakan = (sama dengan)
+============================================================================================================
+
+Optional Values
+Pada bahasa pemrograman lain ada null atau undefined, namun di rust tidak mengenal data seperti ini
+Untuk membuat variable yang memang datanya bisa ada dan tidak bisa menggunakan Option Enum
+Ada 2 opsi
+- None : Untuk yang tidak ada isinya
+- Some(T) : Untuk yang ada isinya
+============================================================================================================
+
+Comparing
+Di rust juga bisa membuat operator perbandingan sendiri, nanti tinggal implemenmtasi trait dari operasi perbandingan yang ingin dibuat
+============================================================================================================
+
+Closure
+Ini bisa dibilang juga sebagai anonymous function
+Untuk tipe datanya adalah fn(paramType) -> returnType
+
+Closure sebagai Parameter
+Dengan menggunakan closure, bisa dioper kedalam parameter function kayak callback function
+
+Closure Scope
+Dengan menggunakan closure, closure dapat menggunakan data dalam scope yang sama, namun ini bisa membingungkan jika sering digunakan pada project besar
+============================================================================================================
+
+Collection
+Ini bisa menghandle tipe data array yang fix, collection bisa berkembang
+Collection disimpannya dalam heap bukan di stack seperti array
+String juga sebenarnya adalah tipe data collection (collection of char)
+Perlu diingat, karena collection ini disimpan dalam heap, maka bisa terjadi perpindahan ownership saat dikirimkan ke function, loop, maupun method
+
+Tipe Data Collection
+- Sequences : Tipe data yang memiliki index
+- Maps : Berupa key dan value
+- Sets : Tipe data yang isinya unique dan tidak memiliki index
+
+Sequences
+TIpe data yang mirip seperti array karena memiliki index, namun panjangnya bisa berkembang
+Dibagi menjadi Vec (Vectoer), VecDeque, dan LinkedList
+
+Vec (Vector)
+Sequence yang urutannya sesuai dengan yang diinginkan
+Menambahkan data diurutan paling belakang
+Cocok untuk LIFO
+
+VecDeque
+Mirip seperti vecotr, namun bisa ditamnbahkan data dari depan maupun belakang
+Jadi bisa digunakan sebagai Queue FIFO
+
+Linked List
+Ini menggunakan struktur data linked list, ini bagus untuk menambahkan, mengurangi, atau mencar data ke list
+Ini tidak bisa diaksez menggunakan index seperti vector
+
+Maps
+Isinya menggunakna key dan value, dan keynya adalah unique
+Ada dua implementasi dari map :
+- HashMap : Key nya tidak diurutkan, maka operasi menambahkan data akan menjadi cepat namun tidak ada jaminan urutan
+- BTreeMap : Key nya akan diurutkan
+
+Sets
+Tipe data seperti vector namun isinya unique, data di set juga tidak bisa diakses menggunakan index, datanya juga tidak urut sesuai dengan waktu dimasukkan
+Ada 2 implementasi :
+- BTreeSet : Menjamin urutan data
+- HashSet : Tidak menjamin urutan data
+
+Iterators
+Ini adalah module untuk melakukan mekanisme looping data
+Semua yang ada di collection memiliki fitur iterator
+============================================================================================================
+
+
+
+
 
 

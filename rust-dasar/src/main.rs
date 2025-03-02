@@ -17,6 +17,13 @@ mod second;
 mod crate_test;
 mod third;
 mod trait_test;
+mod generic_test;
+mod optional_test;
+mod comparing_test;
+mod formater;
+mod closure;
+mod collection;
+mod error_handling;
 
 fn main() {
     println!("Hello, world!");
