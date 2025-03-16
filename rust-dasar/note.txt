@@ -417,8 +417,98 @@ Ini adalah module untuk melakukan mekanisme looping data
 Semua yang ada di collection memiliki fitur iterator
 ============================================================================================================
 
+Error Handling
+Rst membagi 2 error menjadi 2 jenis :
+- recoverable : dapat dipulihkan
+- unrecoverable : tidak dapat dipulihkan
 
+Unrecoverable Error
+Ini error yang tidak bisa dipulihkan dan akan membuat aplikasi mati
+Untuk mentrigger error ini bisa menggunakna macro panic!
 
+Recoverable Error
+Ini error yang bisa dipulihkan atau bisa dihandle jika terjadi error, jadi aplikasi tidak langsung mati begitu saja
+Karena rust tidak menggunakan pendekatan try catch, pada function yang bisa mengembalikan error bisa menggunakan return value Enum Result
+Dalam Enum Result terdapat 2 tipe Ok(T) dan Error(E)
 
+? Operator
+Operator ini bisa mengembalikan result jika memang terjadi error
+============================================================================================================
+
+Lifetime
+Tiap data memiliki lifetime berdasarkan scope variablenya, hal ini untuk mencegah juga yang namanya dangling reference
+
+Lifetime di Function
+Hal membingungkan lainnya adalah ketika menggunakan reference di parameter dan di return juga
+Misal dengan case function dengan 2 parameter reference dan membandingkan kedua nilainya lalu melakukan return salah satu parameter sebagai reference
+Di case ini rust akan bingung kearena harus melakukan borrow parameter pertama atau kedua karena kondisinya berbeda
+
+Lifetime Annotation Syntax
+Fitur ini untuk menentukan parameter mana yang akan di borrow, cara menambahkannya sama seperti generic cuma diawali dengan petik satu
+Lifetime tiodak menambahkan waktu hidup dari sebuah variable, ini cuma sebagai tanda di rust value mana yang bisa dijadikan return
+Annotation ini bisa juga digunakan pada struct dan method
+Lifetime ini juga bis digabungkan dengan generic, perbedaannya untuk lifetime annotation ditandai dengan petik satu
+============================================================================================================
+
+Attributes
+Ini adalah cara untuk menambahkan metadata, ini mirip annotation di java, atau lebih tepatnya ini mirip kalo pake lombok
+Attribute di rust sudah disediakan value-valuenya
+
+Derive Attribute
+Ini digunakna untuk melakukan implementasi trait secara otomatis, dan tidak bisa semua trait bisa dilakukan implementasi secara otomatis, hanya beberapa saja
+Sebagai contoh trait Eq, PartialEq, Ord, PartialOrd
+============================================================================================================
+
+Smart Pointer
+Pointer merupakan hal umum yang berisikan alamat ke lokasi di memory
+Samrt pointer ini adalah pointer yang memiliki metadata, di rust ada konsep ownership dan borrowing yang berarti reference ini hanya meminjamkan data
+Sedangkan smart pointer ini adalah pemilik dair data yang ditunjuk, jadi seakan-akan dia pointer tapi dia sebenarnya adalah pemiliknya
+Box<T> adalah cara membuat smart pointer dan akan membuat data disimpan di Heap sedangkan pointernya berada di Stack, keuntungannya agar data tidak akan dicopy saat dikirimkan, sehingga lebih irit memory
+
+Recursive Data Type
+Single data dari Box mungkin tidak menarik, namun akan berguna ketika menemui tipe data yang recursive
+Misal ada tipe data Category yang di dalamnya bisa ada Category lagi
+============================================================================================================
+
+Dereference
+Kadang saat mengggunakan reference namun ingin mengakses langsung datanya bisa dilakukan dereference
+Untuk menggunakannya adalah dengan menggunakan symbol bintang (*)
+
+Deref Trait
+Saat melakukan reference atau Box bisa menggunakan * untuk dereference nya
+Bagaimana jika menggunakan tipe data lain misal struct, nah hal ini gabisa dilakukan dereference
+Untuk melakukannya bisa menggunakan Deref Trait, jika valuenya mutable bisa menggunakan DerefMut
+============================================================================================================
+
+Clean Up
+
+Drop Trait
+Ini adalah trait yang bisa dogunakan untuk melakukan eksekusi function sebelum value tersebut dilakukan drop atau dihapus dari memory
+============================================================================================================
+
+Multiple Ownership
+Pada umumnya owner sebuah value hanya dimiliki oleh 1 varaible saja
+Jika ingin sebuah value bisa dimiliki oleh beberapa owner bisa menggunakan Rc<T> (Reference Counted)
+Jadi nanti akan dihitung beberapa jumlah ownernya, jika sudah tidak ada maka akan dihapus
+Rc<T> ini juga merupakan smart pointer
+============================================================================================================
+
+Static
+Caranya mirip menggunakan constant, cuma harus menggunakan kata kunci static
+Perbedaannya dengan constant:
+- Bisa diubah dengan menggunakan mutable static
+- Ada kemungkinan tidak aman jika dilakukan mutable karena bisa diupdate oleh banyak tempat
+- Untuk mengubah static harus menggunakan unsafe block atau unsafe function
+============================================================================================================
+
+Interior Mutability
+Ini adalah desing pattern dalam rust untuk mengubah data walaupun datanya reference nya immutable
+Untuk melakukan ini bisa menggunakan type RefCell<T>, RefCell ini single ownership
+Aturan dari RefCell:
+- Bnayak immutable borrow diperbolehkan
+- Satu mutable borrow diperbolehkan
+- Banyak mutable borrow tidak diperbolehkan
+- Sekaligus mutable dan immutable borrow tidak diperbolehkan
+============================================================================================================
 
 

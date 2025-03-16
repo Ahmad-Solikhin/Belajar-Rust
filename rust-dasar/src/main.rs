@@ -24,6 +24,15 @@ mod formater;
 mod closure;
 mod collection;
 mod error_handling;
+mod lifetime;
+mod attributes;
+mod smart_pointer;
+mod dereference;
+mod clean_up;
+mod multiple_ownership;
+mod static_variable;
+mod interior_mutability;
+mod macro_test;
 
 fn main() {
     println!("Hello, world!");

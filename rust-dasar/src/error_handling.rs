@@ -13,6 +13,8 @@ Ini error yang bisa dipulihkan atau bisa dihandle jika terjadi error, jadi aplik
 Karena rust tidak menggunakan pendekatan try catch, pada function yang bisa mengembalikan error bisa menggunakan return value Enum Result
 Dalam Enum Result terdapat 2 tipe Ok(T) dan Error(E)
 
+? Operator
+Operator ini bisa mengembalikan result jika memang terjadi error
 
 */
 
@@ -57,5 +59,42 @@ fn test_recoverable_error() {
         Err(error) => {
             println!("{}", error);
         }
+    }
+}
+
+fn connect_email(host: Option<String>) -> Result<String, String> {
+    match host {
+        None => {
+            Err("No email host provided".to_string())
+        }
+        Some(host) => {
+            Ok(host)
+        }
+    }
+}
+
+fn connect_application(host: Option<String>) -> Result<String, String> {
+    //Berikut adalah cara lebih cepat menggunakan ?, jika terjadi error maka err akan langsung dilakukanr return
+    connect_cache(host.clone())?;
+
+    //Ini adalah cara manual
+    let email_result = connect_email(host.clone());
+
+    match email_result {
+        Ok(_) => {println!("Haiyaaa Loo")}
+        Err(err) => {
+            return Err(err);
+        }
+    }
+
+    Ok("Success connect application".to_string())
+}
+
+#[test]
+fn connect_to_application() {
+    let result = connect_application(None);
+    match result {
+        Ok(host) => {println!("Success connect to host : {}", host);}
+        Err(err) => {println!("Error with message : {}", err);}
     }
 }
