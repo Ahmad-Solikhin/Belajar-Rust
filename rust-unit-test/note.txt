@@ -1,0 +1,28 @@
+Uni Test
+Untuk membut unit test di rust cukup menambahkan attribute test pada method
+Untuk menjalankan testnya bisa menggunakan cargo test untuk keseluruhan test atau cargo test nama_function
+Untuk menampilkan output bisa menambahkan parameter --show-output
+
+Assertion
+Ini digunakan untuk memastikan kode yang ditest menghasilkan result yang benar
+Bisa menggunakna macro yang sudah disediakan
+- assert!(boolean, message) : Untuk memastikan nilainya true
+- assert_eq!(left, right, message) : Untuk memastikan left right sesuai
+- assert_ne!(left, right, message) : Untuk memastikan left right tidak sesuai
+
+Panic
+Kadang ingin melakukan pada kode program yang bisa menyebabkan panic
+Jika ingin memenuhi kondisi tersebut bisa menggunakan attribute should_panic
+
+Ignore
+Saat membuat unit test dan ingin mengignore beberapa unit test untuk sementara dibanding dihapus atau dicomment bisa menggunakan attribute ignore
+Ini lebih disarankan, karena jika menjalankan keseluruhan unit test nanti akan diberi tahu jika ada unit test yang diignore
+Jika ingin tetap menjalankan semua unit test yang diignore bisa menambahkan parameter --ignored
+
+Test Result
+Unit test juga bisa mengembalikan enum Result<(), E>
+Jika hasilnya adalah Ok() maka unit testnya sukses, jika hasilnya adalah Err(E), maka hasilnya adalah gagal
+
+Test Module
+Salah satu best practice dalam menggunakan uni test di rust adalah membuat test module lalu menambahkan attribute cfg(test)
+Keunggulannya adalah dependency dev bisa digunakan di module ini, dan test module tidak akan dicompile sama sekali
