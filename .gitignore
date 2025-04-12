@@ -5,3 +5,6 @@
 
 /rust-unit-test/.idea/
 /rust-unit-test/target/
+
+/rust-concurrency/.idea/
+/rust-concurrency/target/

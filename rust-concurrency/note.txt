@@ -1,0 +1,100 @@
+Thread
+Thread bisa digunakan untuk menjalankan task asynchronous
+Di rust bisa menggunakan module std::thread untuk membuat thread
+Untuk membuatnya bisa menggunakan std::thread::spawn(closure)
+Secara default output dari unit test akan ditangkap oleh rust test runner, jadi outputnya baru akan keluar setelah aplikasinya selesai
+Jika ingin menampilkan output secara realtime bisa menggunakan parameter --nocapture
+
+Join Thread
+Saat menjalankan thread menggunakan spawn function, maka akan mengembalikan data JoinHandle<T>
+Data ini bisa digunakan untuk melakukan join thread dengan memanggil method join()
+Method join() akan mengembalikan data Result<T> sesuai dengan return dari thread nya
+Joi ini sifatnya blocking, jadi akan ditunggu sampai selesai
+
+Move Keyword
+Untuk membuat thread perlu menggunakan spawn function yang parameternya adalah function
+Function yang diberikan akan dalam bentuk closure, saat menggunakan variable dari luar closure hal ini diperbolehkan
+Namun untuk kasus closure tersebut dikirim sebagai parameter di function lain, contohnya di spawn, hal ini dilarang karena variable yang digunakan oleh closure tersebut harus dipindahkan ownershipnya ke closure
+Solusi untuk memindahkan variable kedalam scopenya bisa menggunakan keyword move
+
+Current Thread
+Semua program di rust akan jalan di dalam thread, termasuk di dalam unit test
+Untuk mendapatkan thread saat ini yang sedang digunakan bisa menggunakan thread::current()
+Objectnya nanti adalah struct Thread
+
+Thread Factory
+Saat membuat thread, sebenernya digunakan thread factory untuk membuat thread nya
+Bisa membuta thread factory secara manual dan bisa mengatur konfigurasinya, bisa menggunakan Builder di thread
+
+Channel
+Rust memiliki konsep channel untuk komunikasi antar thread
+Channel merupakan struktur data mirip antrian, nanti thread bisa mengirim atau menerima dari channel, jadi antar thread tidak ada komunikasi secara langusng
+Thread bisa menjadi sender dan receiver dalam satu waktu, channel direpresentasikan dalam module mpsc (Multi Producer, Single Consumer)
+Saat sender mengirim data walaupun tidak ada receivernya maka akan langsung dianggep sukse
+Sedangkan si receiver akan selalu menunggu sampai datanya tersedia
+
+Channel Life Cycle
+Saat membuat channel akan dibuta Sender dan Receiver
+Saat sender dihapus dari memori otomatis receiver tidak akan bisa menerima data apapun
+Receiver mengimplementasikan iterator, jadi bisa menggunakan for loop
+Sender dan receiver itu saling berhubungan, ketika salah satunya dihapus dari memori, maka akan error salah satunya
+
+Multi Sender
+Seharsnya bisa membuat multi sender, namun pada contoh sebelumnya ownershipnya dipindahkan ke dalam closure thread nya
+Caranya adalah dengan melakukan clone data Sendernya, secara otomatos Sender hasil clone akan mengirim ke Receiver yang sama
+
+Race Condition
+Cara mengatasi race condition di rust bisa menggunakan atomic atau lock
+
+Atomic
+Tipe data yang digunakan untuk sharing beberapa thread, jadi atomic ini membungkus tipe data yang lainnya
+Namun tipe data atomic hanya terbatas dengan apa yang disediakan oleh rust
+
+Mutex
+Ini singakatan dari Mutual Exclusion, tipe data untuk melindungi data yang disharing lebih dari 1 thread
+Mutex akan memblock thread dan menunggu sampai lock tersedia, jadi logicnya adalah data pertama yang mendapatkan datanya akan melakukan lock datanya, setelah selesai maka akan dilepas locknya dan kembali ke proses awal (Kayak pesimistic lock)
+
+Thread Local
+Thread local adalah fitur menyimpan data di thread, alur hidup datanya akan mengikuti alur hidup threadnya
+Cocok ketika ingin menggunakan data di scope thread dan selama threadnya aktif tiak akan bertukar dengan thread lainnya
+Untuk membuat datanya bisa emnggunakan macro thread_local!, bisa menentukan Cell atau RefCell tergantung datanya mutable atau tidak
+
+Thread Panic
+Jika terjadi panic di thread maka akan memberhentikan thread tersebut, ini tidak akan menghentikan thread lainnya
+Namun jika panicnya terjadi pada thread utama, maka semua threadnya akan berhenti
+
+Barrier
+Tipe data agar beberapa thread menunggu sebelum mengerjakan pekerjaan secara bersamaan
+Contoh akan membuat kode menunggu jika 10 thread sudah tersedia maka boleh berjalan, kalau belum ada harus menunggu terlebih dahulu
+
+Once
+Once digunakan untuk memastikan hanya ada satu thread yang bisa melakukan 1 inisialisasi datanya
+
+Future
+Dengan future memungkinkan thread menjalankan pekerjaan lainnya tanpa mengganggu thread lainnya (mirip future java dan promise js)
+Kalo join itu blocking maka future ini non blocking
+Future memiliki 1 method poll() untuk mengambil data dari futurenya
+Poll merupakan enum, Ready jika data sudah tersedia, dan Pending jika data belum tersedia
+Future merupakan trait, method yang dapat menggunakan future harus menggunakan async
+
+Async Await
+Function atau method yang menggunakan async akan mengembalikan Future
+Memanggil kode async harus pada kode async (method async), pada rust harus menggunakan Runtime / Executor yang memerlukan library
+Ada beberapa library yang bisa digunakan
+- Tokio
+- Async Std
+- Smol
+Pada materi ini menggunakan Tokio karena yang paling populer untuk saat ini
+Future ini lazy, jadi tidak dieksekusi jika tidak dijalankan, agar future dieksekusi bisa menggunakan await
+Await ini hanya bisa digunakan pada kode async, karena dilakukan await maka akan dilakukan poll() bukan join()
+
+Task
+Masalah jika menggunakan thread adalah terlalu mahal perthread bisa mencapai 2-4 MB besarnya
+Kalau di Golang ada Goroutines, maka di rust ada yang namanya Task
+Rust menyediakan runtime untuk Task, namun implementasinya tetap harus menggunakan Tokio Task, jadi penggunaannya mirip dengan thread
+Saat menggunakan Task jangan menggunakan fitur Thread seperti sleep yang nantinya akan menghentikan Thread yang akan digunakan oleh Task nya
+Task merupakan implementasi dari Concurrent, jika Thread adalah implementasi dari Paralel
+
+Task Runtime
+Jika ingin membuat runtime sendiri yang lebih flexible configurasinya
+Namun Tokio Runtime secara difault ketika di drop tidak boleh di drop pada kode async dan harus dibuat Tokio Runtime nya pada scope kode non async
