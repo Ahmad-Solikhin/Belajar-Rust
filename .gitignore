@@ -8,3 +8,5 @@
 
 /rust-concurrency/.idea/
 /rust-concurrency/target/
+/rust-datetime/target/
+/rust-datetime/.idea/

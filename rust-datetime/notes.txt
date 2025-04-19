@@ -1,0 +1,31 @@
+Date
+Pada chrono ada dua tipe jenis waktu, yang memiliki time zone dan yang tidak memiliki tamezone
+Date ini tidak memiliki zona dan direpresentasikan dengan struct NaiveDate
+
+Duration
+Semua tipe data waktu di Chrono adalah immutabl, jadi tidka ada method yang bisa digunakan untuk mengubah waktu pada object yang sudah dibuat
+Namun disediakan operator Add (+) dan Sub (-) yang bisa digunakan untuk memanipulasi waktu, cuma hanya bisa digunakan pada tipe data Duration alias untuk TimeDelta
+Dan hasil dari manipulasi waktu menggunakna Duration akan selalu menghasilkan object baru
+
+Time
+Ini tipe data yang ada jam menit detik dan nanosecond tanpa timezone
+
+DateTime
+Untuk membuat tipe data dengan gabungan date dan time bisa menggunakan NaiveDateTime
+
+TomeZone
+Jika ingin membuat Time yang terdapat zona waktunya bisa menggunakan TimeZone
+Karena banyak data TimeZone jadi ahanya disediakan 2 TimeZone saja yaiut Local dan UTC
+Jika ingin menggunakan TimeZone lain maka harus dilakukan secara manual menggunakan Offset
+Jika ingin menggunakan TimeZone yang sudah disediakan oleh Chrono bisa menambahkan library chrono-tz
+
+DateTime TimeZone
+Bisa menggunakan tipe data DateTime, tidak ada versi Date maupun Time karena TimeZone akan berpengaruh terhadap waktu dan tanggal
+
+Parsing
+Parsing ini biasa dilakukan untuk mengubah string menjadi tipe data waktu
+Bisa menggunakan method parse(string, format) pada tipe data seperti NaiveDate, NaiveTime, NaiveDateTime, dan DateTime
+Untuk format parsingnya bisa dicari di google aja
+
+Format
+Selain mengubah string menjadi tipe data waktu, bisa juga dilakukan sebaliknya mengubah tipe data waktu menjadi string
