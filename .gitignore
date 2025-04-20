@@ -2,11 +2,11 @@
 
 /rust-dasar/.idea/
 /rust-dasar/target/
-
 /rust-unit-test/.idea/
 /rust-unit-test/target/
-
 /rust-concurrency/.idea/
 /rust-concurrency/target/
 /rust-datetime/target/
 /rust-datetime/.idea/
+/rust-database/.idea/
+/rust-database/target/

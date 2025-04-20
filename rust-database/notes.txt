@@ -1,0 +1,54 @@
+Connection
+Connection digunakan agar bisa berkomunikasi dengan database, bisa menggunakan struct PgConnection
+Format postgresql postgres://user:password@host:port/nama_database
+
+Database Pool
+Ini adalah best practice dalam membuat koneksi ke database, karena ini akan lebih efisien karena tidak akan dilakukan buka dan tutup koneksi
+Untuk membuat pool di sqlx bisa menggunakan struct PgPool
+
+Execute SQL
+Untuk mengirim perintah SQL ke db bisa menggunakan function query, hasilnya adalah object Query
+Ada dua jenis SQL, yang menghasilkan data seperti select dan tidak menghasilkan data
+Untuk query yang tidak menghasilkan data bisa menggunakan function execute()
+
+Prepare Statement
+Untuk menangani sql injection bisa menggunakan Prepare Statement dengan menggunakan method bind()
+
+Query SQL
+Ini adalah perintah SQL yang menghasilkan data, method yang digunakan adalah fetch()
+- fetch_optional : Menghasilkan 1 data atau kosong
+- fetch_one : Menghasilkan satu data, jika tidak maka akan error
+- fetch_all : Menghasilkan banyak data
+- fetch : mengambil data dalam bentuk stream (lazy)
+Khusus untuk fetch() karena balikannya ada Stream, maka perlu menambahkan library futures untuk mengambil data di Stream tersebut
+
+Result Mapping
+Untuk mengubah data dari bentuk row menjadi struct bisa memanfaatkan method map() pada Query
+Bisa juga melakukan mapping secara otomatis tanpa dideklarasikan secara otomatis
+Namun harus dipastikan hasil kolomnya harus sama namanya dengan nama field structnya, untuk menggunakannnya harus menggunakan method query_as()
+
+Data Type
+Untuk pemetaan tipe data di database dengan tipe data di reust bisa dilihat di google aja nanti
+
+Transaction
+Ini paling penting untuk menjaga data ketika terjadi error
+Untuk memulai transaction bisa menggunakan method begin()
+
+Auto Increment
+Pada sqlx harus dibuat secara manual
+Untuk mendapatkan nilai terakhirnya ahrus menggunakan koneksi yang sama
+Bisa memanfaatkan Transaction, karena koneksi yang digunakan akan sama
+
+Database Migration
+Ini bisa digunakan untuk management perubahan database dengan lebih mudah
+Fitur ini ada di library yang berbeda, dan ini akan berbasis CLI, nama librarynya adalah sqlx-cli
+Ini tidak ditambahkan di projectnya, seperti menginstall aplikasi baru di pc
+SQLx menggunakan env untuk mendeteksi lokasi datanbasenya, dan bisa menggunakan nama env DATABASE_URL
+Atau bisa juga menggunakan file .env
+Untuk membuat file migration bisa menggunakan "sqlx migrate add -r <nama_migration>"
+-r itu menandakan apakah migrationnya bisa di rollback atau tidak
+Secara otomatis nanti file migration akan dibuat di folder migration
+Dan untuk menjalankan migrationnya bisa menggunakan "sql migrate run --target-version <version>"
+Jika <version> tidak ditambahkan maka akan dijalankan semua versionnya yang belum pernah di eksekusi
+Untuk melakukan rollback perubahan bisa menggunakan "sqlx migrate revert --target-version <version>"
+Jika tidak diberikan <version> maka hanya akan menjalankan migrasi terakhir saja
