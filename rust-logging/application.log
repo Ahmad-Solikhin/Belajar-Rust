@@ -1,0 +1,7 @@
+2025-05-03T13:13:48.515844+07:00 ERROR rust_logging::tests - This error log
+2025-05-03T13:13:48.515922900+07:00 WARN rust_logging::tests - This warn log
+2025-05-03T13:13:48.515942800+07:00 INFO rust_logging::tests - This info log
+2025-05-03T13:38:02.801905400+07:00 ERROR rust_logging::tests1 - This error log
+2025-05-03T13:38:02.801985100+07:00 WARN rust_logging::tests1 - This warn log
+2025-05-03T13:38:02.802015400+07:00 INFO rust_logging::tests1 - This info log
+2025-05-03T13:38:21.959265100+07:00 ERROR rust_logging::tests2 - This error log

@@ -1,0 +1,6 @@
+Simple Logger
+Saat menggunakan log seperti info!() dsb tidak akan langsung muncul, karena itu hanya merupakan kontrak
+Salah satu implementasi yang paling sederhana adalah Env Logger untuk menampilkan log ke Console / Terminal
+
+Complex Logger
+Env Logger hanya bisa menampilkan log ke console, jika ingin ke tempat lain misal ke file nbisa menggunakan "log4rs"

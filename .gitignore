@@ -10,3 +10,5 @@
 /rust-datetime/.idea/
 /rust-database/.idea/
 /rust-database/target/
+/rust-logging/target/
+/rust-logging/.idea/
