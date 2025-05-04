@@ -12,3 +12,5 @@
 /rust-database/target/
 /rust-logging/target/
 /rust-logging/.idea/
+/rust-serialization/target/
+/rust-serialization/.idea/

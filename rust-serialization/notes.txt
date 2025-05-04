@@ -1,0 +1,38 @@
+Struct
+Ini adalah tipe data yang sering dilakukan serde
+Untuk melakukannya bisa menambahkan derive Serialize dan Deserialize pada Struct nya
+Serde ini juga bisa menghandle nested struct
+
+Array
+Di rust ukuran array tidak dinamis, harus ditentukan diawal ukurannya
+Karena biasanya dari format json tidak menentu ukurannya maka tidak disarankan menggunakan array di rust
+Karena keterbatasan ini, maka biasanya tipe yang digunakan adalah Vector karena ukurannya dinamis
+
+Option
+Serde juga mendukung tipe data Option, ini akan diisi null di json nya
+Jika tidak menggunakan Option maka semua data wajib diisi
+
+Map
+Kadang ada kasus dimana tidak diketahui nama2 attributenya atau dinamis, untuk kasus ini bisa menggunakan Map yang nanti keynya dinamis
+
+Attribute
+Secara default saat melakukan serde, maka akan menggunakan nama attribute dalam structnya
+Terkadang ingin diubah naming conventionnya misal di rust ingin menggunakan PascalCase dan di json mengguinakan snake_case
+Ini bisa menggunakan configuration dan nanti akan diterapkan diseluruh attribute dalam structnya
+
+Filed Attribute
+Jika tidak ingin semua attribute untuk configurasinya bisa menggunakan Field Attribute
+
+Enum
+Serde juga bisa digunakan pada Enum, namun tipe datanya wajib ditambahkan derive
+Namun enum di rust bisa memiliki data dan serde bisa menghandlenya
+
+Chrono
+Chrono sendiri bisa untuk serde, namun saat ini terbatas untuk DateTime yang UTC
+
+Custom Serialization
+Serde mendukung jika ingin implementasi custom secara manual
+Untuk membuat implementasi Serialize bis menggunakan trait Serialize
+
+Custom Deserialize
+Ini akan lebih kompleks, karena ini akan merubah ke tipe data di rustnya
