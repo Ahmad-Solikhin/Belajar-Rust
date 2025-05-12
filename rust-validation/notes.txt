@@ -1,0 +1,30 @@
+Struct
+Bisa menambahkan di struct dengan menaruhnya di dalam fieldnya
+Banyak jenis validasi yang disediakan di rust, bisa cek dokumentasinya aja nanti
+Jika validasi yang diinginkan tidak disediakan, bisa membuat sendiri custom validation
+
+Validation Message
+Ini bisa menambahkan attribute message untuk menulis custom message
+
+Nested Struct
+Untuk melakukan validasi nested pada struct bisa menambahkan jenis validasi nested
+Namun tidak semua nested struct bisa divalidasi, struct tersebut juga harus diberikan attribute Validate
+
+Collection
+Bisa juga dilakukan validasi dalam collection
+Syaratnya, jika tipe data dalam collection berisi struct harus implement Validate dan serde::Serialize
+Harus diberikan attribute nested juga
+
+Custom Validation
+Bisa membuat custom function validasi sendiri dengan return Result<(), ValidatorError>
+Dan untuk menggunakannnya harus mengarahkan ke arah functionnya berapa di module mana
+
+Struct Level Validation
+Kadang butuh melakukan validasi di level struct, misal untuk membandingkan beberapa field sekaligus
+Library validator memiliki jenis validasi schema, namun harus dibuat custom validation
+
+Context
+Ada kasus membutuhkan object dari luar, misal mengecek apakah email sudah ada di database atau tidak
+Library di validator mendukung context, dengan demikian untuk koneksi ke tampat lain tidak harus dilakukan hard code
+
+

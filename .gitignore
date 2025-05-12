@@ -14,3 +14,5 @@
 /rust-logging/.idea/
 /rust-serialization/target/
 /rust-serialization/.idea/
+/rust-validation/.idea/
+/rust-validation/target/
